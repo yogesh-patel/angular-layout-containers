@@ -1,0 +1,13 @@
+<div class="content-panel" style="top:{{ctrl.top}}px;left:{{ctrl.left}}px;height:{{ctrl.height}}px;width:{{ctrl.width}}px;">
+    <div class="header content-panel-header">
+        {{ctrl.headerLabel}}
+        <i class="right small mdi-navigation-close red-text accent-1 waves-effect" ng-click="ctrl.close()"></i>
+    </div>
+    <div ng-transclude class="content-body" style="height:{{ctrl.bodyHeight}}px">
+
+    </div>
+    <div class="content-action" ng-show="ctrl.buttonBarNeeded">
+        <a class="waves-effect waves-light btn">Stuff1</a>
+        <a class="waves-effect waves-light btn">Stuff2</a>
+    </div>
+</div>
