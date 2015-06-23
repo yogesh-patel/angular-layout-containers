@@ -1,6 +1,6 @@
 # Angular Layout Containers
 
-Collection of angular component to build desktop first web application. Following layout components are available:
+Collection of angular component to build "Desktop First" web application. Following layout components are available:
 
 - ViewPort : A LayoutContainer that fills the browser window and monitors window resizing. Viewports are best used for applications that will fill the browser without window scrolling. Children of the viewport can allow scrolling. Code snippet:
 
