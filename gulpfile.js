@@ -12,7 +12,7 @@ var gutil = require('gulp-util');
 var browserSync = require('browser-sync');
 var deploy = require('gulp-gh-pages');
 
-// source directives and services
+// source directives
 var srcJsFiles = 'src/**/*.js';
 
 // lint source javascript files
@@ -33,25 +33,35 @@ gulp.task('clean', function() {
 // and copy into dist folder and docs
 gulp.task('build-js', function() {
   return gulp.src([
-    'src/services/esriLoader.js',
-    'src/services/esriRegistry.js',
-    'src/directives/esriMap.js',
-    'src/directives/esriFeatureLayer.js',
-    'src/directives/esriLegend.js'])
-    .pipe(concat('angular-esri-map.js'))
+     'src/directives/viewport.js',
+    'src/directives/borderLayout.js',
+    'src/directives/contentPanel.js'])
+    .pipe(concat('angular-desktop-containers.js'))
     .pipe(gulp.dest('dist'))
     .pipe(gulp.dest('docs/lib'))
     .pipe(stripDebug())
     .pipe(ngAnnotate())
     .pipe(uglify())
-    .pipe(rename('angular-esri-map.min.js'))
+    .pipe(rename('angular-desktop-containers.min.js'))
     .pipe(gulp.dest('dist'))
     .on('error', gutil.log);
 });
 
+gulp.task('copy-template-files', function () {
+  gulp.src('src/templates/**/*.html')
+      .pipe(gulp.dest('dist/templates/'))
+      .pipe(gulp.dest('docs/lib/templates'));
+});
+
+gulp.task('copy-style-files', function () {
+  gulp.src('src/style/**/*.css')
+      .pipe(gulp.dest('dist/style/'))
+      .pipe(gulp.dest('docs/lib/style'));
+});
+
 // lint then clean and build javascript
 gulp.task('build', function(callback) {
-  runSequence('lint', 'clean', 'build-js', callback);
+  runSequence('lint', 'clean', 'build-js','copy-template-files','copy-style-files', callback);
 });
 
 // serve docs on local web server
@@ -75,11 +85,11 @@ gulp.task('deploy', ['build'], function () {
     .pipe(deploy());
 });
 
-// deploy to Esri's github pages
+// deploy to Yogesh's github pages
 gulp.task('deploy-prod', ['build'], function () {
   return gulp.src('./docs/**/*')
     .pipe(deploy({
-      remoteUrl: 'https://github.com/Esri/angular-esri-map.git'
+      remoteUrl: 'https://github.com/yogesh-patel/angular-desktop-containers.git'
     }));
 });
 

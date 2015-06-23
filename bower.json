@@ -1,6 +1,6 @@
 {
   "name": "angular-desktop-containers",
-  "version": "0.1.0",
+  "version": "0.1.0-beta",
   "authors": [
     "yogesh-patel"
   ],
@@ -12,7 +12,7 @@
     "ContentPanel"],
 
   "license": "MIT",
-  "homepage": "www.synerzip.com",
+  "homepage": "https://github.com/yogesh-patel/angular-desktop-containers.git",
   "ignore": [
     "**/.*",
     "node_modules",
