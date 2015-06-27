@@ -1,7 +1,8 @@
 /**
  * Created by yogeshp on 23/06/15.
  */
-
+var scripts = document.getElementsByTagName("script");
+var currentScriptPath = scripts[scripts.length-1].src;
 angular.module("layout-containers",[])
     .directive("viewport", ["$window","$compile", function ($window,$compile) {
         return {
@@ -67,7 +68,7 @@ angular.module("layout-containers").directive("borderLayout",[function(){
         transclude: true,
         bindToController:true,
         controllerAs:"borderCtrl",
-        templateUrl:"./templates/borderLayout.html",
+        templateUrl: currentScriptPath.substring(0, currentScriptPath.lastIndexOf('/') + 1) + 'templates/borderLayout.html',
         controller:function($scope,$element,$attrs){
             if(this.border == "true"){
                 this.borderNeeded = true;
@@ -115,7 +116,7 @@ angular.module("layout-containers").directive("north",[function(){
         controllerAs:"northCtrl",
         require:["^borderLayout","^north"],
         bindToController:true,
-        templateUrl:"./templates/northContainer.html",
+        templateUrl: currentScriptPath.substring(0, currentScriptPath.lastIndexOf('/') + 1) + 'templates/northContainer.html',
         link:function($scope,$element,$attrs,controller){
             var borderCtrl = controller[0];
             var northCtrl = controller[1];
@@ -168,7 +169,7 @@ angular.module("layout-containers").directive("south",[function(){
         controllerAs:"southCtrl",
         require:["^borderLayout","^south"],
         bindToController:true,
-        templateUrl:"./templates/southContainer.html",
+        templateUrl: currentScriptPath.substring(0, currentScriptPath.lastIndexOf('/') + 1)+ 'templates/southContainer.html',
         link:function($scope,$element,$attrs,controller){
             var borderCtrl = controller[0];
             var southCtrl = controller[1];
@@ -228,7 +229,7 @@ angular.module("layout-containers").directive("west",["$document","$timeout",fun
         controllerAs:"westCtrl",
         require:["^borderLayout","^west"],
         bindToController:true,
-        templateUrl:"./templates/westContainer.html",
+        templateUrl: currentScriptPath.substring(0, currentScriptPath.lastIndexOf('/') + 1)+ 'templates/westContainer.html',
         link:function($scope,$element,$attrs,controller,$transclude) {
             var borderCtrl = controller[0];
             var westCtrl = controller[1];
@@ -373,7 +374,7 @@ angular.module("layout-containers").directive("east",["$document","$timeout",fun
         controllerAs:"eastCtrl",
         require:["^borderLayout","^east"],
         bindToController:true,
-        templateUrl:"./templates/eastContainer.html",
+        templateUrl: currentScriptPath.substring(0, currentScriptPath.lastIndexOf('/') + 1)+ 'templates/eastContainer.html',
         link:function($scope,$element,$attrs,controller,$transclude) {
             var borderCtrl = controller[0];
             var eastCtrl = controller[1];
@@ -519,7 +520,7 @@ angular.module("layout-containers").directive("centerPortion",["$document","$tim
         controllerAs:"ctrl",
         require:["^borderLayout","^centerPortion"],
         bindToController:true,
-        templateUrl:"./templates/centerContainer.html",
+        templateUrl: currentScriptPath.substring(0, currentScriptPath.lastIndexOf('/') + 1)+ 'templates/centerContainer.html',
         link:function($scope,$element,$attrs,controller,$transclude) {
             var borderCtrl = controller[0];
             var ctrl = controller[1];
@@ -612,54 +613,54 @@ angular.module("layout-containers").directive("centerPortion",["$document","$tim
  * Created by yogeshp on 20/06/15.
  */
 angular.module("layout-containers")
-    .directive("contentPanel",[function(){
+    .directive("contentPanel", [function () {
         return {
-            restrict:"E",
-            scope:{
-                height:"@",
-                width:"@",
-                border:"@",
-                bodyBorder:"@",
-                headerLabel:"@",
-                hideButtonBar:"@",
-                close:"&onClose"
+            restrict: "E",
+            scope: {
+                height: "@",
+                width: "@",
+                border: "@",
+                bodyBorder: "@",
+                headerLabel: "@",
+                hideButtonBar: "@",
+                close: "&onClose"
             },
-            bindToController:true,
-            controllerAs:"ctrl",
-            templateUrl:"./templates/contentPanel.html",
+            bindToController: true,
+            controllerAs: "ctrl",
+            templateUrl: currentScriptPath.substring(0, currentScriptPath.lastIndexOf('/') + 1)+ 'templates/contentPanel.html',
             transclude: true,
-            controller:function($scope,$element,$attrs){
+            controller: function ($scope, $element, $attrs) {
                 this.top = 0;
-                this.left= 0;
+                this.left = 0;
                 this.height = $element.parent().height();
                 this.width = $element.parent().width();
                 this.bodyHeight = 0;
                 this.buttonBarNeeded = true;
             },
-            link:function($scope,$element,$attrs,controller,$transclude){
-                var transcludedContent,transclusionScope;
+            link: function ($scope, $element, $attrs, controller, $transclude) {
+                var transcludedContent, transclusionScope;
                 var ctrl = controller;
-                if(ctrl.hideButtonBar == "true"){
+                if (ctrl.hideButtonBar == "true") {
                     ctrl.buttonBarNeeded = false;
                 }
                 $scope.$watch(function ($scope) {
                     return $element.parent().height();
-                },function(newValue){
+                }, function (newValue) {
                     ctrl.height = newValue;
                     layout();
                 });
 
                 $scope.$watch(function ($scope) {
                     return $element.parent().width();
-                },function(newValue){
+                }, function (newValue) {
                     ctrl.width = newValue;
                     layout();
                 });
 
-                function layout(){
-                    if(ctrl.buttonBarNeeded) {
+                function layout() {
+                    if (ctrl.buttonBarNeeded) {
                         ctrl.bodyHeight = ctrl.height - 50 - 78;
-                    }else{
+                    } else {
                         ctrl.bodyHeight = ctrl.height - 50;
                     }
                 }
