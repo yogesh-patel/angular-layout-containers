@@ -5,12 +5,15 @@
     "yogesh-patel"
   ],
   "description": "Angular containers for desktop first app",
-  "main": ["dist/angular-containers.js", "angular-containers.min.js"],
-  "keywords":
-    ["Angular",
+  "main": [
+    "dist/angular-containers.js",
+    "angular-containers.min.js"
+  ],
+  "keywords": [
+    "Angular",
     "BorderLayout",
-    "ContentPanel"],
-
+    "ContentPanel"
+  ],
   "license": "MIT",
   "homepage": "https://github.com/yogesh-patel/angular-desktop-containers.git",
   "ignore": [
@@ -20,7 +23,8 @@
     "test",
     "tests"
   ],
- "dependencies": {
-    "angular": "~1.4.0"
+  "dependencies": {
+    "angular": "~1.4.0",
+    "materialize": "~0.97.0"
   }
 }

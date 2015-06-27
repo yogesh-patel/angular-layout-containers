@@ -1,7 +1,8 @@
 /**
  * Created by yogeshp on 23/06/15.
  */
-
+var scripts = document.getElementsByTagName("script");
+var currentScriptPath = scripts[scripts.length-1].src;
 angular.module("layout-containers",[])
     .directive("viewport", ["$window","$compile", function ($window,$compile) {
         return {

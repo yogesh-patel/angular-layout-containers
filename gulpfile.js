@@ -48,7 +48,7 @@ gulp.task('build-js', function() {
 });
 
 gulp.task('copy-template-files', function () {
-  gulp.src('src/templates/**/*.html')
+  gulp.src('src/directives/templates/**/*.html')
       .pipe(gulp.dest('dist/templates/'))
       .pipe(gulp.dest('docs/lib/templates'));
 });
@@ -59,14 +59,40 @@ gulp.task('copy-style-files', function () {
       .pipe(gulp.dest('docs/lib/style'));
 });
 
+gulp.task('copy-jquery-files', function () {
+  gulp.src('bower_components/jquery/dist/jquery.min.js')
+      .pipe(gulp.dest('docs/lib/jquery'));
+});
+
+gulp.task('copy-angular-files', function () {
+  gulp.src('bower_components/angular/angular.min.js')
+      .pipe(gulp.dest('docs/lib/angular'));
+});
+
+gulp.task('copy-materialize-files', function () {
+  gulp.src('bower_components/materialize/dist/css/*.css')
+      .pipe(gulp.dest('docs/lib/materialize/css'));
+  gulp.src('bower_components/materialize/dist/font/**/*.*')
+      .pipe(gulp.dest('docs/lib/materialize/font'));
+  gulp.src('bower_components/materialize/dist/js/*.js')
+      .pipe(gulp.dest('docs/lib/materialize/js'));
+});
+
 // lint then clean and build javascript
 gulp.task('build', function(callback) {
   runSequence('lint', 'clean', 'build-js','copy-template-files','copy-style-files', callback);
 });
 
+// lint then clean and build javascript
+gulp.task('build-example', function(callback) {
+  runSequence('lint', 'clean', 'build-js','copy-template-files','copy-style-files', 'copy-jquery-files','copy-materialize-files','copy-angular-files',callback);
+});
+
+
+
 // serve docs on local web server
 // and reload anytime source code or docs are modified
-gulp.task('serve', ['build'], function() {
+gulp.task('serve', ['build-example'], function() {
   browserSync({
     server: {
       baseDir: ['docs', 'test']
@@ -76,7 +102,7 @@ gulp.task('serve', ['build'], function() {
     notify: false
   });
 
-  gulp.watch([srcJsFiles,'./docs/**.*.html', './docs/app/**/*.js', './docs/styles/*.css'], ['build', browserSync.reload ]);
+  gulp.watch([srcJsFiles,'./docs/**.*.html', './docs/app/**/*.js', './docs/styles/*.css'], ['build-example', browserSync.reload ]);
 });
 
 // deploy to github pages
@@ -86,7 +112,7 @@ gulp.task('deploy', ['build'], function () {
 });
 
 // deploy to Yogesh's github pages
-gulp.task('deploy-prod', ['build'], function () {
+gulp.task('deploy-prod', ['build-example'], function () {
   return gulp.src('./docs/**/*')
     .pipe(deploy({
       remoteUrl: 'https://github.com/yogesh-patel/angular-desktop-containers.git'

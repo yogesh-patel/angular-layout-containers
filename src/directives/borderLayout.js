@@ -15,7 +15,7 @@ angular.module("layout-containers").directive("borderLayout",[function(){
         transclude: true,
         bindToController:true,
         controllerAs:"borderCtrl",
-        templateUrl:"./templates/borderLayout.html",
+        templateUrl: currentScriptPath.substring(0, currentScriptPath.lastIndexOf('/') + 1) + 'templates/borderLayout.html',
         controller:function($scope,$element,$attrs){
             if(this.border == "true"){
                 this.borderNeeded = true;
@@ -63,7 +63,7 @@ angular.module("layout-containers").directive("north",[function(){
         controllerAs:"northCtrl",
         require:["^borderLayout","^north"],
         bindToController:true,
-        templateUrl:"./templates/northContainer.html",
+        templateUrl: currentScriptPath.substring(0, currentScriptPath.lastIndexOf('/') + 1) + 'templates/northContainer.html',
         link:function($scope,$element,$attrs,controller){
             var borderCtrl = controller[0];
             var northCtrl = controller[1];
@@ -116,7 +116,7 @@ angular.module("layout-containers").directive("south",[function(){
         controllerAs:"southCtrl",
         require:["^borderLayout","^south"],
         bindToController:true,
-        templateUrl:"./templates/southContainer.html",
+        templateUrl: currentScriptPath.substring(0, currentScriptPath.lastIndexOf('/') + 1)+ 'templates/southContainer.html',
         link:function($scope,$element,$attrs,controller){
             var borderCtrl = controller[0];
             var southCtrl = controller[1];
@@ -176,7 +176,7 @@ angular.module("layout-containers").directive("west",["$document","$timeout",fun
         controllerAs:"westCtrl",
         require:["^borderLayout","^west"],
         bindToController:true,
-        templateUrl:"./templates/westContainer.html",
+        templateUrl: currentScriptPath.substring(0, currentScriptPath.lastIndexOf('/') + 1)+ 'templates/westContainer.html',
         link:function($scope,$element,$attrs,controller,$transclude) {
             var borderCtrl = controller[0];
             var westCtrl = controller[1];
@@ -321,7 +321,7 @@ angular.module("layout-containers").directive("east",["$document","$timeout",fun
         controllerAs:"eastCtrl",
         require:["^borderLayout","^east"],
         bindToController:true,
-        templateUrl:"./templates/eastContainer.html",
+        templateUrl: currentScriptPath.substring(0, currentScriptPath.lastIndexOf('/') + 1)+ 'templates/eastContainer.html',
         link:function($scope,$element,$attrs,controller,$transclude) {
             var borderCtrl = controller[0];
             var eastCtrl = controller[1];
@@ -467,7 +467,7 @@ angular.module("layout-containers").directive("centerPortion",["$document","$tim
         controllerAs:"ctrl",
         require:["^borderLayout","^centerPortion"],
         bindToController:true,
-        templateUrl:"./templates/centerContainer.html",
+        templateUrl: currentScriptPath.substring(0, currentScriptPath.lastIndexOf('/') + 1)+ 'templates/centerContainer.html',
         link:function($scope,$element,$attrs,controller,$transclude) {
             var borderCtrl = controller[0];
             var ctrl = controller[1];
