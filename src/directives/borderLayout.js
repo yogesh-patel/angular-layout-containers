@@ -69,11 +69,9 @@ angular.module("layout-containers").directive("north",[function(){
             var northCtrl = controller[1];
 
             $scope.$watch(function($scope){
-                return borderCtrl.width;
+                return borderCtrl.height;
             },function(newvalue){
-                console.log(northCtrl.size);
-                console.log(borderCtrl.height);
-                console.log(borderCtrl.width);
+
                 //Calculate North width
                // $scope.northWidth = borderCtrl.northWidth = (borderCtrl.width - borderCtrl.eastWidth - borderCtrl.westWidth);
                 $scope.northWidth = borderCtrl.northWidth = (borderCtrl.width );
@@ -92,9 +90,17 @@ angular.module("layout-containers").directive("north",[function(){
                 //Calculate North Left
                 //$scope.northLeft = borderCtrl.westWidth;
                 $scope.northLeft = 0;
+
+                layout();
             });
 
+            function layout(){
+                northCtrl.top = 0;
+                northCtrl.left = 0;
+                borderCtrl.northSize = northCtrl.height = northCtrl.size;
+                northCtrl.width = borderCtrl.width;
 
+            }
 
 
         }
@@ -197,6 +203,13 @@ angular.module("layout-containers").directive("west",["$document","$timeout",fun
                 }
             });
 
+            $scope.$watch(function($scope){
+                return borderCtrl.northSize;
+
+            },function(newValue){
+                layout();
+            });
+
             $scope.$watch("westCtrl.collapsed",function(newValue){
                 if(newValue == "true"){
                     $element.css("display","none");
@@ -227,9 +240,9 @@ angular.module("layout-containers").directive("west",["$document","$timeout",fun
             });
 
             function layout(){
-                westCtrl.top = 0;
+                westCtrl.top = borderCtrl.northSize;
                 westCtrl.left = 0;
-                westCtrl.height = parentHeight;
+                westCtrl.height = parentHeight- borderCtrl.northSize;
                 borderCtrl.westSize = westCtrl.width = westCtrl.size;
                 westCtrl.contentWidth = westCtrl.size;
                 if(westCtrl.splitNeeded){
@@ -372,10 +385,10 @@ angular.module("layout-containers").directive("east",["$document","$timeout",fun
             });
 
             function layout(){
-                eastCtrl.top = 0;
+                eastCtrl.top = borderCtrl.northSize;
 
                 eastCtrl.right = 0;
-                eastCtrl.height = parentHeight;
+                eastCtrl.height = parentHeight - borderCtrl.northSize;
                 borderCtrl.eastSize = eastCtrl.width = eastCtrl.size;
                 eastCtrl.contentWidth = eastCtrl.size;
                 if(eastCtrl.splitNeeded){
@@ -527,9 +540,9 @@ angular.module("layout-containers").directive("centerPortion",["$document","$tim
                     westSize = borderCtrl.westSize;
                 }
 
-                ctrl.top = 0;
+                ctrl.top = borderCtrl.northSize;
                 ctrl.left = westSize;
-                ctrl.height = borderCtrl.height;
+                ctrl.height = borderCtrl.height - borderCtrl.northSize;
 
                 ctrl.width = borderCtrl.width - westSize - eastSize;
 
@@ -556,3 +569,5 @@ angular.module("layout-containers").directive("centerPortion",["$document","$tim
 
     };
 }]);
+
+

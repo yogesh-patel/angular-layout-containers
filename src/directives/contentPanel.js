@@ -12,7 +12,8 @@ angular.module("layout-containers")
                 bodyBorder: "@",
                 headerLabel: "@",
                 hideButtonBar: "@",
-                close: "&onClose"
+                close: "&onClose",
+                hideHeader:"@"
             },
             bindToController: true,
             controllerAs: "ctrl",
